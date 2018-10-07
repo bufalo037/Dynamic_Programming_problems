@@ -1,0 +1,161 @@
+===============================================================================
+====================== Tema 1 Proiectaaarea Algoritmilor ======================
+============================= Costea Mihai 322CB ==============================
+===============================================================================
+
+===============================================================================
+===============================================================================
+
+Problema 1: frati
+
+Am observat ca alegand suma maximala de ficare data dintre obiectele preferate
+de Jon vs obiectele preferate de Sam voi obtine mereu cea mai buna diferenta.
+Deci a trebuit sa le sortez dupa suma iar dupa in functie de ce persoana era
+sa aleaga ar fi preferat sa castige cat mai mult obiecte preferate asa ca le-am
+sortat dupa preferintele lui Jon.
+Deci, am folosit un map pentru a le sorta dupa suma, iar dupa valorile din map
+erau niste liste care contineau concursurile, pe care le-am sortat dupa aceea
+descrescator dupa preferintele lui Jon. Si dupa am luat fiecare element din
+map si am iterat de la inceput pt Jon si de la final pentru Sam. Cand cei 2 se
+uneau treceam la urmatoarea valoare din map.
+
+Am observat pe vmchecker ca unii au un timp mai mic, aprox 0.5 sec. Exista o
+solutie mai optima ca cu ce am venit eu? 
+
+===============================================================================
+===============================================================================
+
+Problema 2: ursi
+
+Am observat ca daca as cunoaste la fiecare caracter cate subsiruri incorecte pot
+forma as putea sa ma folosesc de acest lucru pentru a genera la urmatorul caracter
+cate siruri incorecte pot forma. Avand in vedere ca, ca un sir incorect sa poata
+sa existe trebuie sa sparg un sir corect in 2 siruri incorecte sau sa adaug o 
+caciulita, imi permite mereu la fiecare caracter sa pot sa am ori numai mesaje
+care sa aiba un numar par de siruri incorecte ori un numar impar de siruri 
+incorecte. Fapt ce e util deoarece asta inseamna ca daca am un numar impar de
+caciulite nu o sa am nici un subsir incorect par.
+
+In continuare, pentru un caracter oarecare din mesaj daca acesta este '_' 
+inseamna ca pot adauga la fiecare subsir posibil anterior caracterul respeciv
+marind astfel subsirul. Daca mesajul cu un caracter mai putin ca mesajul de
+la caracterul curent avea un numar x la configuratia n inseamna ca ca putem
+adauga la fiecare din cele x mesaje caracteul '_' de n ori deoarece sunt 
+n subsiruri si la fiecare subsir ii revine o data caracterul facand astfel alt
+subsir. Fiind x astfel de mesaje inseamna ca rezultatul va fi x * n.
+
+Daca un caracter este '^' inseamna ca ori marim numarul de subsiruri invalide
+cu acesta => numarul de mesaje imediat anterioare care erau de i-1 subsiruri
+invalide devine numarul de configuratii de dimensiune i pentru mesajul actual.
+In schimb daca dorim ca cu caracterul '^' sa inchidem din subsiruri inseamna
+ca trebuie sa fie cu 1 mai multe subsiruri deschise la pasul anterior pe care
+vrem sa le inchidem. i + 1 deschise, un singur caracter '^' pentru a le inchide
+rezulta ca pentru fieare mesaj care contine un numar de i + 1 subsiruri invalide
+de la pasul anterior o sa am i + i configuratii la pasul actual pentru i subsiruri
+invalide. Primul rezultat se va aduna cu al doilea pentru a da un numar total de
+posibile configuratii de i subsuri invalide la acest pas.
+
+*prin subsir anterior lui i ma refer subsirurile care pot forma o configuratie a 
+mesajului format din caracterele mesajului de la 1 la i-1. Presupunand o indexare
+de la 1.
+
+*o configuratie este o posibila combinatie de submesaje care respecta proprietarea
+ca numarul subsiruri invalide trebuie sa fie un anumit numar ales. Acest numar 
+variaza, avand pentru fiecare caracter din mesaj numar_caciulite configuratii.
+
+Am incercat sa fiu cat de corerent am putut in explicatii, am mai comentat si 
+codul odata ce il scriam pentru explicatii suplimentare.
+
+===============================================================================
+===============================================================================
+
+Problema 3: planificarea 
+
+Am incercat initial sa o fac cu o matrice in care puneam pe diagonala worst case
+iar dupa mergeam in sus pentru a combina solutii si parcurgeam matricea pe 
+diagonla pana ajungeam la ultimul element. Pe diagonala principala puneam 
+cazul in care fiecare proba s-ar afla in concursuri diferite. Din nefericire
+nu imi intra in timp pentru ultimle 3 asa ca am schimbat. Am incercat sa optimizez
+si avand in vedere ca la fiecare iterare prin matrice ma foloseam mereu de maxim 2 diagonale am taiat din spatiul alocat suplimentar pentru ca manca timp sa il 
+aloc dar tot nu imi treceau 2 teste din cauza timpului, asa ca am venit cu 
+urmatoarea solutie care nu foloseste DP propruzis dar e ok totusi, dar am 
+impresia ca s-ar putea se gaseasca o solutie mai buna. Chiar sunt curios in
+legatura cu care e solutia optimala la aceasta problema. 
+
+Am observat ca pana nu se umple un concurs solutia optima ar fi sa bagi toate
+probele in concursul respectiv, lucru pe care l-am si facut. Cand in schimb s
+ajunge in punctul in care concursul nu ar mai permite probe noi se va aplica pe
+concursul anterior mentionat pierderile de timp la puterea a 3-a. Lucru care ar
+putea sa faca ca alegerile facute sa u mai fie o solutie optima, asa ca incerc
+sa mai bag in acest concurs probe din concursul anterior lui si verific daca 
+optin un timp mai bun. Daca acest lucru reuseste o sa fac acelas lucru si cu
+concursul anterior anterior concurusului de care vorbeam pana cand nu optin un
+timp mai bun.
+
+Acest lucru merge deoarece am mereu garantia ca atunci cand vreau sa fac o iterare
+backwards concursurile trecute dau un delay minim iar cand se intampla sa vreau
+sa fac o schimbare atat timp cat iterez prin toate concursurile pana nu se mai 
+schimba nimic stiu ca am btinut un timp minim. 
+
+Solutia aceasta nu poate sa lase un concurs fara probe deoarece prima proba
+din orice concurs nu se poate gasi in acelas concurs cu prima proba din 
+concursul imediat urmator ca altfel s-ar fi gasit in acelas concurs in etapa
+initiala in care le puneam pe toate in acelas concurs.
+
+Solutia este si eficienta deoarece din cauza modului in care este formula
+problema iterarile de corectare vor fi foarte mici. facand problema un O(n)
+si putin care variaza in functie de input.
+
+===============================================================================
+===============================================================================
+
+Problema 4: Numaratoarea
+
+Ideea pe care am folosit-o s-ar putea incadra in ideea de programare dinamica 
+deoarece construiesc termenii urmatori bazandu-ma mereu pe termenii anteriori,
+dar nu am o formula de recurenta propriuzisa dupa care merge, ci bazandu-ma pe
+niste observatii pe care le-am facut.
+
+Primul termen il deduc ca fiind o suma de x si nr_pos -1 de 1.
+
+Dupa care am obsrvat ca e suficient sa extrag 1 din termenul cel mai de la dreapta
+care este cel putin cu 2 mai mare ca ultimul termen al secventei garantandu-mi 
+ca daca extrag de acolo 1 pot sa il pun pe ultima pozitie daca nu as putea sa
+il pun mai devreme undeva. Si din cauza ca sirul de termeni este descrescator 
+stiu mereu ca acest lucru este posibil ca altfel as optine o contradictie.
+Se poate demonstra.
+Dupa care inserez termenul respectiva la pozitia imediat urmatoare valida 
+pastrand astfel un sir maximal. Pozitia imediat urmatoare valida este pozitia
+la care termenul anterior este mai mare ca termenul actual cu cel putin 1.
+Dupa care petru fiecare element mai mare ca 1 de la capat il scad si il inserez
+in continuare pe pozitia imediat valida pana cand cele 2 se intersecteaza.
+
+Se putea face mai eficient?
+
+===============================================================================
+===============================================================================
+
+Eu codez de cand ma stiu folosind urmatoarea sintaxa:
+
+if(...)
+{
+	...
+}
+else
+{
+	...
+}
+
+si nuprea imi place sa scriu cod asa:
+
+if(...) {
+	...
+} else {
+	...
+}
+
+Mi se pare codul foarte inghesuit si il citesc greu. Din cate stiu ambele 
+coding style-uri sunt valide. Sper sa nu fie vr-o problema.
+
+===============================================================================
+===============================================================================
